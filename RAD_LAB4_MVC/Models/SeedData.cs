@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ProductModel;
+using RAD_LAB4_MVC.Data;
 
 namespace RAD_LAB4_MVC.Models
 {
@@ -17,64 +17,64 @@ namespace RAD_LAB4_MVC.Models
                     return;
                 }
 
-                // ----- Create Categories -----
-                var cat1 = new Category { Description = "Electronics" };
-                var cat2 = new Category { Description = "Food" };
-                var cat3 = new Category { Description = "Office" };
+                // categories
+                var laptops = new Category { Description = "Laptops" };
+                var phones = new Category { Description = "Phones" };
+                var office = new Category { Description = "Office" };
+                context.Category.AddRange(laptops, phones, office);
 
-                // ----- Create Suppliers -----
-                var sup1 = new Supplier
+                // suppliers
+                var techWorld = new Supplier
                 {
-                    SupplierName = "Super Supplies Ltd.",
-                    AddressLine1 = "Main Street",
-                    AddressLine2 = "Galway"
+                    Name = "Tech World",
+                    AddressLine1 = "123 Main St",
+                    AddressLine2 = "Galway",
+                    Products = new List<Product>()
                 };
 
-                var sup2 = new Supplier
+                var gadgetsLtd = new Supplier
                 {
-                    SupplierName = "TechWarehouse",
-                    AddressLine1 = "Industrial Park",
-                    AddressLine2 = "Dublin"
+                    Name = "Gadgets Ltd",
+                    AddressLine1 = "45 High St",
+                    AddressLine2 = "Dublin",
+                    Products = new List<Product>()
                 };
+                context.Supplier.AddRange(techWorld, gadgetsLtd);
 
-                // ----- Create Products -----
+                // products
                 var p1 = new Product
                 {
-                    Description = "Laptop",
-                    QuantityInStock = 15,
-                    UnitPrice = 999.99f,
-                    Category = cat1
+                    Description = "Dell XPS 13",
+                    QuantityInStock = 12,
+                    UnitPrice = 1299.99f,
+                    dateFirstIssued = new DateTime(2024, 9, 1),
+                    Category = laptops,
+                    Suppliers = new List<Supplier> { techWorld }
                 };
 
                 var p2 = new Product
                 {
-                    Description = "Printer Paper",
-                    QuantityInStock = 500,
-                    UnitPrice = 4.99f,
-                    Category = cat3
+                    Description = "iPhone 15",
+                    QuantityInStock = 25,
+                    UnitPrice = 1099.99f,
+                    dateFirstIssued = new DateTime(2025, 1, 10),
+                    Category = phones,
+                    Suppliers = new List<Supplier> { gadgetsLtd }
                 };
 
                 var p3 = new Product
                 {
-                    Description = "Chocolate Bar",
-                    QuantityInStock = 200,
-                    UnitPrice = 1.50f,
-                    Category = cat2
+                    Description = "Printer Paper (A4, 500)",
+                    QuantityInStock = 400,
+                    UnitPrice = 4.99f,
+                    dateFirstIssued = new DateTime(2023, 6, 5),
+                    Category = office,
+                    Suppliers = new List<Supplier> { techWorld }
                 };
 
-                // ----- Many-to-Many setup -----
-                p1.Suppliers.Add(sup2);  // TechWarehouse supplies Laptop
-                p2.Suppliers.Add(sup1);  // Super Supplies supplies Paper
-                p3.Suppliers.Add(sup1);  // Super Supplies supplies Chocolate
-
-                // Add everything
-                context.AddRange(cat1, cat2, cat3);
-                context.AddRange(sup1, sup2);
-                context.AddRange(p1, p2, p3);
-
+                context.Product.AddRange(p1, p2, p3);
                 context.SaveChanges();
             }
         }
-
     }
 }
