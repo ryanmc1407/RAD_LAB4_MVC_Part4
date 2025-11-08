@@ -11,7 +11,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="Create" asp-controller="Products" method="post">
+        <form asp-action="Create" asp-controller="Products" method="post" asp-antiforgery="true">
 
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
