@@ -36,6 +36,7 @@ namespace RAD_LAB4_MVC.Controllers
             }
 
             var supplier = await _context.Supplier
+                .Include(s => s.Products)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (supplier == null)
             {

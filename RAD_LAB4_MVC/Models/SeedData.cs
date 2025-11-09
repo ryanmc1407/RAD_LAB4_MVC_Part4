@@ -52,11 +52,32 @@ namespace RAD_LAB4_MVC.Models
                     Suppliers = new List<Supplier> { techWorld }
                 };
 
+                var p4 = new Product
+                {
+                    Description = "MacBook",
+                    QuantityInStock = 1,
+                    UnitPrice = 1299.99f,
+                    dateFirstIssued = new DateTime(2024, 9, 1),
+                    Category = laptops,
+                    Suppliers = new List<Supplier> { techWorld }
+                };
+
+
                 var p2 = new Product
                 {
                     Description = "iPhone 15",
                     QuantityInStock = 25,
                     UnitPrice = 1099.99f,
+                    dateFirstIssued = new DateTime(2025, 1, 10),
+                    Category = phones,
+                    Suppliers = new List<Supplier> { gadgetsLtd }
+                };
+
+                var p5 = new Product
+                {
+                    Description = "iPhone 16",
+                    QuantityInStock = 25,
+                    UnitPrice = 1199.99f,
                     dateFirstIssued = new DateTime(2025, 1, 10),
                     Category = phones,
                     Suppliers = new List<Supplier> { gadgetsLtd }
@@ -72,7 +93,7 @@ namespace RAD_LAB4_MVC.Models
                     Suppliers = new List<Supplier> { techWorld }
                 };
 
-                context.Product.AddRange(p1, p2, p3);
+                context.Product.AddRange(p1, p2, p3, p4, p5);
                 context.SaveChanges();
             }
         }

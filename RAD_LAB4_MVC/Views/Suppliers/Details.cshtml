@@ -1,5 +1,5 @@
 ﻿@model RAD_LAB4_MVC.Models.Supplier
-
+@using System.Linq
 @{
     ViewData["Title"] = "Details";
 }
@@ -29,6 +29,37 @@
             @Html.DisplayFor(model => model.AddressLine2)
         </dd>
     </dl>
+</div>
+<div>
+    <h5>Products supplied</h5>
+    @if (Model.Products != null && Model.Products.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Unit Price</th>
+                    <th>Quantity In Stock</th>
+                    <th>Date First Issued</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.Products.OrderBy(p => p.Description))
+                {
+                    <tr>
+                        <td>@product.Description</td>
+                        <td>@product.UnitPrice.ToString("C")</td>
+                        <td>@product.QuantityInStock</td>
+                        <td>@product.dateFirstIssued.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>This supplier is not currently linked to any products.</p>
+    }
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
